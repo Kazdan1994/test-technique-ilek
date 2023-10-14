@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  root 'wines#index'
+  root 'wines#search'
+
+  resources :wines do
+    get '/:page', action: :search, on: :collection
+  end
 end
