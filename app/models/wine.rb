@@ -2,8 +2,6 @@ require 'elasticsearch/model'
 
 # Wine model
 class Wine < ApplicationRecord
-  paginates_per 10
-
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 

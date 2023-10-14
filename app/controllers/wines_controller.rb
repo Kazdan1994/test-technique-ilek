@@ -1,26 +1,24 @@
 # Wines controller
 class WinesController < ApplicationController
+  include Pagy::Backend
+
   def index
-    @wines = Wine.limit(5)
+    @pagy, @wines = pagy(Wine.limit(5))
   end
 
   def search
-    @wines = search_wines
-    redirect_to_last_page if @wines.total_pages < params[:page].to_i
+    @pagy, @wines = search_wines
+    redirect_to_last_page if @pagy.pages < params[:page].to_i
   end
 
   private
 
   def search_wines
     if params[:q].present?
-      search_results.page(params[:page]).per(5)
+      pagy(Wine.__elasticsearch__.search(query: wildcard_query).records, items: 5)
     else
-      Wine.page(params[:page]).per(5)
+      pagy(Wine.all, items: 5)
     end
-  end
-
-  def search_results
-    Wine.__elasticsearch__.search(query: wildcard_query).records
   end
 
   def wildcard_query

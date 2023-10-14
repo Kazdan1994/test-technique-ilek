@@ -1,5 +1,5 @@
 <div class="min-w-screen min-h-screen bg-gray-800 px-5 py-5">
-  <div class="w-full mx-auto rounded-xl bg-gray-100 shadow-lg p-10 text-gray-800 relative overflow-hidden resize-x min-w-80 max-w-3xl" x-data="app()" x-init="generatePassword()">
+  <div class="w-full mx-auto rounded-xl bg-gray-100 shadow-lg p-10 text-gray-800 relative overflow-hidden resize-x min-w-80 max-w-3xl">
     <!-- Search Bar -->
     <form class="relative mt-1">
       <label for="search"></label>
@@ -23,7 +23,6 @@
         <div class="group relative">
           <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
             <img
-              height="48"
               src="https://res.cloudinary.com/dttd773dq/image/upload/v1697274692/ilek-assets/images/wine-bottle_uatwvb.png"
               alt=""
               class="h-full w-full object-cover object-center lg:h-full lg:w-full"
@@ -46,9 +45,10 @@
         </div>
       <% end %>
     </div>
-    <!-- Pagination -->
-    <div class="mt-4 flex items-center justify-between">
-      <%= paginate @wines %>
+    <div class="flex items-center justify-center my-6">
+      <% if @pagy.pages > 1 %>
+        <%= pagy_nav(@pagy, link_extra: 'class="border rounded-md px-3 py-1 text-blue-500 mx-1"', link_inactive_extra: 'class="border rounded-md px-3 py-1 text-gray-500 mx-1"').html_safe %>
+      <% end %>
     </div>
   </div>
 </div>
