@@ -1,0 +1,6 @@
+<div>
+  <h1><%= @wine.name %></h1>
+  <% if expert_signed_in? %>
+  <a href="/reviews/<%= @wine.id %>">Review this wine</a>
+    <% end %>
+</div>

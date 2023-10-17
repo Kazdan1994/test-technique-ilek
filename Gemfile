@@ -72,3 +72,5 @@ gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
 gem 'pagy'
 gem 'tailwindcss-rails', '~> 2.0'
+
+gem "devise", "~> 4.9"

@@ -5,6 +5,8 @@ class Wine < ApplicationRecord
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 
+  has_many :reviews, dependent: :destroy
+
   index_name "wines-#{Rails.env}"
 
   settings index: { number_of_shards: 1 } do
@@ -12,6 +14,7 @@ class Wine < ApplicationRecord
       indexes :name, type: 'text'
       indexes :properties, type: 'text'
       indexes :marketplace, type: 'text'
+      indexes :note, type: 'integer'
     end
   end
 

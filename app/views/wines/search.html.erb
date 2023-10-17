@@ -1,4 +1,4 @@
-<div class="min-w-screen min-h-screen bg-gray-800 px-5 py-5">
+<div class="min-w-screen min-h-screen bg-gray-200 px-5 py-5">
   <div class="w-full mx-auto rounded-xl bg-gray-100 shadow-lg p-10 text-gray-800 relative overflow-hidden resize-x min-w-80 max-w-3xl lg:max-w-7xl">
     <!-- Search Bar -->
     <form class="relative mt-1">
@@ -20,42 +20,46 @@
     <!-- Wine Cards -->
     <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-6 xl:gap-x-4">
       <% @wines.each do |wine| %>
-        <div class="relative flex flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
-          <div class="relative mt-1 overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700">
-            <img
-              src="https://res.cloudinary.com/dttd773dq/image/upload/v1697274692/ilek-assets/images/wine-bottle_uatwvb.png"
-              class="h-full w-full object-cover"
-              alt=""
-              />
-          </div>
-          <div class="p-6">
-            <div class="mb-2 flex items-center justify-between">
-              <p class="block font-sans text-base font-medium leading-relaxed text-blue-gray-900 antialiased">
-                <%= wine.name %>
-              </p>
-              <p class="block font-sans text-base font-medium leading-relaxed text-blue-gray-900 antialiased">
-                <%= number_to_currency(wine.price, :unit => '€', :separator => ',', :delimiter => ' ', format: '%n %u') %>
+        <a href="/wines/<%= wine.id %>">
+          <div class="relative flex flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+            <div class="relative mt-1 overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700">
+              <img
+                src="https://res.cloudinary.com/dttd773dq/image/upload/v1697274692/ilek-assets/images/wine-bottle_uatwvb.png"
+                class="h-full w-full object-cover"
+                alt=""
+                />
+            </div>
+            <div class="p-6">
+              <div class="mb-2 flex items-center justify-between">
+                <p class="block font-sans text-base font-medium leading-relaxed text-blue-gray-900 antialiased">
+                  <%= wine.name %>
+                </p>
+                <p class="block font-sans text-base font-medium leading-relaxed text-blue-gray-900 antialiased">
+                  <%= number_to_currency(wine.price, :unit => '€', :delimiter => ' ',  format: '%n %u', strip_insignificant_zeros: true) %>
+                </p>
+              </div>
+              <p class="block font-sans text-sm font-normal leading-normal text-gray-700 antialiased opacity-75">
+                <%= wine.properties %>
               </p>
             </div>
-            <p class="block font-sans text-sm font-normal leading-normal text-gray-700 antialiased opacity-75">
-              <%= wine.properties %>
-            </p>
+            <div class="mt-auto flex justify-between p-6 pt-0">
+              <div class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="yellow">
+                  <path d="M10 1l2.93 6.4 6.93.7-5 4.85 1.47 7.1-6.4-3.35-6.4 3.35 1.47-7.1-5-4.85 6.93-.7z"/>
+                </svg>
+                <p class="text-sm text-gray-500 ml-2">4.5</p>
+              </div>
+              <% if expert_signed_in? %>
+              <button
+                class="middle none center rounded-lg bg-pink-500 p-3 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                data-ripple-light="true"
+              >
+                Review this wine
+              </button>
+                <% end %>
+            </div>
           </div>
-          <div class="mt-auto flex justify-between p-6 pt-0">
-                <div class="flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="yellow">
-                    <path d="M10 1l2.93 6.4 6.93.7-5 4.85 1.47 7.1-6.4-3.35-6.4 3.35 1.47-7.1-5-4.85 6.93-.7z"/>
-                  </svg>
-                  <p class="text-sm text-gray-500 ml-2">4.5</p>
-                </div>
-            <button
-              class="middle none center rounded-lg bg-pink-500 p-3 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-              data-ripple-light="true"
-            >
-              Review this wine
-            </button>
-          </div>
-        </div>
+        </a>
       <% end %>
     </div>
     <div class="flex items-center justify-center mt-4 pt-4">

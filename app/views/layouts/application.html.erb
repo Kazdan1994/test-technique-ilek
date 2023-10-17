@@ -1,22 +1,37 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>TestTechniqueIlek</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+<head>
+  <title>TestTechniqueIlek</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css">
 
-  </head>
+</head>
 
-  <body>
-    <main>
-      <%= yield %>
-    </main>
-  </body>
+<body>
+<nav>
+  <% if user_signed_in? %>
+    <h1>Connecté comme : <%= current_user.name %></h1>
+    <p>utilisateur</p>
+    <%= link_to 'Sign out', destroy_user_session_path, data: {turbo_method: :delete} %>
+  <% elsif expert_signed_in? %>
+    <h1>Connecté comme : <%= current_expert.name %></h1>
+    <p>expert</p>
+    <%= link_to 'Sign out', destroy_expert_session_path, data: {turbo_method: :delete} %>
+  <% else %>
+    <a href="<%= new_user_session_path %>">Sign in</a>
+    <a href="<%= new_user_registration_path %>">Registration</a>
+    <a href="<%= new_expert_registration_path %>">I'm an expert</a>
+  <% end %>
+</nav>
+<main>
+  <%= yield %>
+</main>
+</body>
 </html>

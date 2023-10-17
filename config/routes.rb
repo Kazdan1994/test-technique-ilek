@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  devise_for :experts
+  devise_for :users
 
   root 'wines#search'
 
-  resources :wines do
-    get '/:page', action: :search, on: :collection
+  resources :wines, only: %i[search show] do
+    resources :reviews, only: %i[show create], param: :wine_id
   end
+
+  resources :reviews, only: %i[show create], param: :wine_id
 end

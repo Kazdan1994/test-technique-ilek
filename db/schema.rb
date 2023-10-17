@@ -10,7 +10,44 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_10_13_133315) do
+ActiveRecord::Schema[7.1].define(version: 2023_10_17_133509) do
+  create_table "experts", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "name", default: "", null: false
+    t.index ["email"], name: "index_experts_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_experts_on_reset_password_token", unique: true
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.integer "rating"
+    t.text "message"
+    t.integer "wine_id", null: false
+    t.integer "expert_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["expert_id"], name: "index_reviews_on_expert_id"
+    t.index ["wine_id"], name: "index_reviews_on_wine_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "name", default: "", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
   create_table "wines", force: :cascade do |t|
     t.string "name"
     t.text "properties"
@@ -18,6 +55,9 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_13_133315) do
     t.string "marketplace"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "note", default: 4, null: false
   end
 
+  add_foreign_key "reviews", "experts"
+  add_foreign_key "reviews", "wines"
 end

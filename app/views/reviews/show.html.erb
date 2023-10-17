@@ -1,0 +1,18 @@
+<h1>Reviews id: <%= @wine.id %></h1>
+<% @wine.reviews.each do |review| %>
+  <p>Note : <%= review.rating %></p>
+  <p><%= review.message %></p>
+<% end %>
+<%= form_with(model: [@wine, @review], local: true) do |form| %>
+  <div>
+    <%= form.label :message %>
+    <%= form.text_area :message %>
+  </div>
+
+  <div>
+    <%= form.label :rating %>
+    <%= form.number_field :rating, in: 1..5, :value => 5 %>
+  </div>
+
+  <%= form.submit %>
+<% end %>
