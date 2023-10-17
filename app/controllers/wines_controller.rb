@@ -1,7 +1,7 @@
 # Wines controller
 class WinesController < ApplicationController
   include Pagy::Backend
-  before_action :set_wine, only: %i[show update]
+  before_action :set_wine, only: %i[show]
 
   def index
     @pagy, @wines = pagy(Wine.limit(5))

@@ -6,12 +6,12 @@
 <%= form_with(model: [@wine, @review], local: true) do |form| %>
   <div>
     <%= form.label :message %>
-    <%= form.text_area :message %>
+    <%= form.text_area :message, value: @review.message || '' %>
   </div>
 
   <div>
     <%= form.label :rating %>
-    <%= form.number_field :rating, in: 1..5, :value => 5 %>
+    <%= form.number_field :rating, in: 1..5, value: @review.rating || 5 %>
   </div>
 
   <%= form.submit %>
