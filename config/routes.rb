@@ -4,8 +4,10 @@ Rails.application.routes.draw do
 
   root 'wines#search'
 
-  resources :wines, only: %i[search show], param: :wine_id do
+  resources :wines, only: %i[search show] do
     resources :reviews, only: %i[show create update]
-    get 'reviews', to: 'reviews#show', on: :member, as: 'create_review'
+    get   'reviews', to: 'reviews#show', param: :wine_id, as: 'show_review'
+    post  'reviews', to: 'reviews#create', on: :member, as: 'create_review'
+    patch 'reviews', to: 'reviews#update', on: :member, as: 'update_review'
   end
 end
