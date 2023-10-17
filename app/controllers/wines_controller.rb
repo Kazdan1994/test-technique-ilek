@@ -37,7 +37,7 @@ class WinesController < ApplicationController
   end
 
   def set_wine
-    @wine = Wine.find(params[:wine_id])
+    @wine = Wine.find(params[:id])
   end
 
   def wine_params
