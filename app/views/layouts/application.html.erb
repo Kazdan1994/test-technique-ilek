@@ -15,20 +15,31 @@
 </head>
 
 <body>
-<nav>
-  <% if user_signed_in? %>
-    <h1>Connecté comme : <%= current_user.name %></h1>
-    <p>utilisateur</p>
-    <%= link_to 'Sign out', destroy_user_session_path, data: {turbo_method: :delete} %>
-  <% elsif expert_signed_in? %>
-    <h1>Connecté comme : <%= current_expert.name %></h1>
-    <p>expert</p>
-    <%= link_to 'Sign out', destroy_expert_session_path, data: {turbo_method: :delete} %>
-  <% else %>
-    <a href="<%= new_user_session_path %>">Sign in</a>
-    <a href="<%= new_user_registration_path %>">Registration</a>
-    <a href="<%= new_expert_registration_path %>">I'm an expert</a>
-  <% end %>
+<nav class="bg-gray-800 p-4">
+  <div class="container mx-auto flex justify-between items-center">
+    <a href="/">
+      <span class="text-xl font-bold text-white">Wine Search</span>
+    </a>
+    <div class="flex gap-x-6 items-center">
+      <% if user_signed_in? %>
+        <h1>Connecté comme : <%= current_user.name %></h1>
+        <p>utilisateur</p>
+        <%= link_to 'Sign out', destroy_user_session_path, data: {turbo_method: :delete} %>
+      <% elsif expert_signed_in? %>
+        <%= link_to "My searches", searches_path, class: "text-white font-medium" %>
+
+        <a href="<%= edit_expert_registration_path %>">
+          <h1>Connecté comme : <%= current_expert.name %></h1>
+        </a>
+        <p>expert</p>
+        <%= button_to "Sign out", destroy_expert_session_path, class: "bg-gray-700 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded", method: :delete %>
+      <% else %>
+        <%= link_to "Sign In", new_user_session_path, class: "text-white font-medium" %>
+        <%= button_to "Registration", new_user_registration_path, class: "bg-gray-700 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded" %>
+        <%= button_to "I'm an expert", new_expert_session_path, class: "bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded" %>
+      <% end %>
+    </div>
+  </div>
 </nav>
 <main>
   <%= yield %>

@@ -16,10 +16,21 @@ class WinesController < ApplicationController
 
   def search_wines
     if params[:q].present?
+      save_search
       pagy(Wine.__elasticsearch__.search(query: wildcard_query).records, items: 5)
     else
       pagy(Wine.all, items: 5)
     end
+  end
+
+  def save_search
+    return unless user_signed_in? || expert_signed_in?
+      search = Search.find_or_create_by!(query: params[:q]) do |s|
+        s.expert_id = current_expert&.id
+        s.user_id = current_user&.id
+      end
+
+      search.touch
   end
 
   def wildcard_query

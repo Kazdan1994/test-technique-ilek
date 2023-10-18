@@ -10,4 +10,6 @@ Rails.application.routes.draw do
     post  'reviews', to: 'reviews#create', on: :member, as: 'create_review'
     patch 'reviews', to: 'reviews#update', on: :member, as: 'update_review'
   end
+
+  resources :searches, only: :index
 end

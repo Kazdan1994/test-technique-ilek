@@ -1,0 +1,35 @@
+table,sqlite_sequence,sqlite_sequence,7,"CREATE TABLE sqlite_sequence(name,seq)"
+table,schema_migrations,schema_migrations,8,"CREATE TABLE ""schema_migrations"" (""version"" varchar NOT NULL PRIMARY KEY)"
+index,sqlite_autoindex_schema_migrations_1,schema_migrations,20,
+table,ar_internal_metadata,ar_internal_metadata,21,"CREATE TABLE ""ar_internal_metadata"" (""key"" varchar NOT NULL PRIMARY KEY, ""value"" varchar, ""created_at"" datetime(6) NOT NULL, ""updated_at"" datetime(6) NOT NULL)"
+index,sqlite_autoindex_ar_internal_metadata_1,ar_internal_metadata,22,
+table,wines,wines,668,"CREATE TABLE ""wines"" (""id"" integer PRIMARY KEY AUTOINCREMENT NOT NULL, ""name"" varchar, ""properties"" text, ""price"" float, ""marketplace"" varchar, ""note"" integer, ""wine_type"" varchar, ""created_at"" datetime(6) NOT NULL, ""updated_at"" datetime(6) NOT NULL)"
+table,users,users,1005,"CREATE TABLE ""users"" (""id"" integer PRIMARY KEY AUTOINCREMENT NOT NULL, ""email"" varchar DEFAULT '' NOT NULL, ""encrypted_password"" varchar DEFAULT '' NOT NULL, ""reset_password_token"" varchar, ""reset_password_sent_at"" datetime(6), ""remember_created_at"" datetime(6), ""created_at"" datetime(6) NOT NULL, ""updated_at"" datetime(6) NOT NULL)"
+index,index_users_on_email,users,1007,"CREATE UNIQUE INDEX ""index_users_on_email"" ON ""users"" (""email"")"
+index,index_users_on_reset_password_token,users,1008,"CREATE UNIQUE INDEX ""index_users_on_reset_password_token"" ON ""users"" (""reset_password_token"")"
+table,experts,experts,1010,"CREATE TABLE ""experts"" (""id"" integer PRIMARY KEY AUTOINCREMENT NOT NULL, ""name"" varchar DEFAULT '' NOT NULL, ""email"" varchar DEFAULT '' NOT NULL, ""encrypted_password"" varchar DEFAULT '' NOT NULL, ""reset_password_token"" varchar, ""reset_password_sent_at"" datetime(6), ""remember_created_at"" datetime(6), ""created_at"" datetime(6) NOT NULL, ""updated_at"" datetime(6) NOT NULL)"
+index,index_experts_on_email,experts,1011,"CREATE UNIQUE INDEX ""index_experts_on_email"" ON ""experts"" (""email"")"
+index,index_experts_on_reset_password_token,experts,1013,"CREATE UNIQUE INDEX ""index_experts_on_reset_password_token"" ON ""experts"" (""reset_password_token"")"
+table,reviews,reviews,1014,"CREATE TABLE ""reviews"" (""id"" integer PRIMARY KEY AUTOINCREMENT NOT NULL, ""rating"" integer, ""message"" text, ""wine_id"" integer NOT NULL, ""expert_id"" integer NOT NULL, ""created_at"" datetime(6) NOT NULL, ""updated_at"" datetime(6) NOT NULL, CONSTRAINT ""fk_rails_95e62ec56c""
+FOREIGN KEY (""wine_id"")
+  REFERENCES ""wines"" (""id"")
+, CONSTRAINT ""fk_rails_1c8952a0d7""
+FOREIGN KEY (""expert_id"")
+  REFERENCES ""experts"" (""id"")
+)"
+index,index_reviews_on_wine_id,reviews,1015,"CREATE INDEX ""index_reviews_on_wine_id"" ON ""reviews"" (""wine_id"")"
+index,index_reviews_on_expert_id,reviews,1016,"CREATE INDEX ""index_reviews_on_expert_id"" ON ""reviews"" (""expert_id"")"
+table,prices,prices,1017,"CREATE TABLE ""prices"" (""id"" integer PRIMARY KEY AUTOINCREMENT NOT NULL, ""price"" integer NOT NULL, ""date"" date NOT NULL, ""wine_id"" integer NOT NULL, ""created_at"" datetime(6) NOT NULL, ""updated_at"" datetime(6) NOT NULL, CONSTRAINT ""fk_rails_5b66690b07""
+FOREIGN KEY (""wine_id"")
+  REFERENCES ""wines"" (""id"")
+)"
+index,index_prices_on_wine_id,prices,1019,"CREATE INDEX ""index_prices_on_wine_id"" ON ""prices"" (""wine_id"")"
+table,searches,searches,1020,"CREATE TABLE ""searches"" (""id"" integer PRIMARY KEY AUTOINCREMENT NOT NULL, ""query"" text DEFAULT '' NOT NULL, ""expert_id"" integer, ""user_id"" integer, ""created_at"" datetime(6) NOT NULL, ""updated_at"" datetime(6) NOT NULL, CONSTRAINT ""fk_rails_632069692a""
+FOREIGN KEY (""expert_id"")
+  REFERENCES ""experts"" (""id"")
+, CONSTRAINT ""fk_rails_e192b86393""
+FOREIGN KEY (""user_id"")
+  REFERENCES ""users"" (""id"")
+)"
+index,index_searches_on_expert_id,searches,1021,"CREATE INDEX ""index_searches_on_expert_id"" ON ""searches"" (""expert_id"")"
+index,index_searches_on_user_id,searches,1022,"CREATE INDEX ""index_searches_on_user_id"" ON ""searches"" (""user_id"")"
