@@ -17,6 +17,7 @@
       <div class="h-2 bg-green-500 flex-1"></div>
       <div class="h-2 bg-red-500 flex-1"></div>
     </div>
+    <%= react_component("HelloWorld", { props: { name: "react-rails" }, prerender: true}) %>
     <!-- Wine Cards -->
     <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-6 xl:gap-x-4">
       <% @wines.each do |wine| %>
