@@ -1,6 +1,3 @@
-require 'elasticsearch/model'
-
-# Wine model
 class Wine < ApplicationRecord
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
@@ -17,7 +14,7 @@ class Wine < ApplicationRecord
       indexes :name, type: 'text'
       indexes :properties, type: 'text'
       indexes :marketplace, type: 'text'
-      indexes :note, type: 'integer'
+      indexes :note, type: 'float'
       indexes :wine_type, type: 'text'
     end
   end
@@ -50,4 +47,9 @@ class Wine < ApplicationRecord
     )
   end
 
+  # This method calculates the average rating of the wine
+  def recalculate_average_rating
+    self.note = average_rating
+    save
+  end
 end

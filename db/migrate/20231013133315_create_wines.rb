@@ -5,7 +5,7 @@ class CreateWines < ActiveRecord::Migration[7.1]
       t.text    :properties
       t.float   :price
       t.string  :marketplace
-      t.integer :note
+      t.float   :note
       t.string  :wine_type
 
       t.timestamps

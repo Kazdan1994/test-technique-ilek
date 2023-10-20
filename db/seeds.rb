@@ -23,8 +23,6 @@ end
     wine_type: Faker::Wine.wine_type
   )
 
-  ratings = []
-
   10.times do
     rating = Faker::Number.between(from: 0, to: 5)
 
@@ -40,9 +38,5 @@ end
       price: Faker::Number.between(from: 2, to: 15_000),
       date: Faker::Date.between(from: 10.years.ago.to_s, to: Date.today)
     )
-
-    ratings << rating
   end
-
-  wine.update(note: ratings.sum.fdiv(ratings.size))
 end
