@@ -72,6 +72,7 @@ end
 gem 'devise', '~> 4.9'
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
+gem 'noticed', '~> 1.6'
 gem 'pagy'
 gem 'react_on_rails'
 gem 'tailwindcss-rails', '~> 2.0'

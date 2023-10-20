@@ -6,4 +6,6 @@ class Expert < ApplicationRecord
 
   has_many :reviews
   has_many :searches
+
+  has_many :notifications, as: :recipient, dependent: :destroy
 end

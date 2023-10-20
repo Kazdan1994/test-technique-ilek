@@ -5,6 +5,8 @@ class Wine < ApplicationRecord
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 
+  after_create ->(wine) { ActionCable.server.broadcast 'WineChannel', wine: }
+
   has_many :reviews, dependent: :destroy
   has_many :prices, dependent: :destroy
 
@@ -31,4 +33,21 @@ class Wine < ApplicationRecord
       0.0
     end
   end
+
+  def matches_user_searches?
+    user_searches = Search.where(expert_id: current_expert.id)
+    user_searches.each do |user_search|
+      return true if Search.index(user_search.query)
+    end
+    false
+  end
+
+  def notify_user_of_match
+    Notice.create(
+      recipient: current_expert,
+      subject: 'New wine matches your previous searches!',
+      body: "The new wine #{name} matches your previous searches for #{search_terms.join(', ')}."
+    )
+  end
+
 end

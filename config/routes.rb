@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   root 'wines#search'
 
-  resources :wines, only: %i[search show] do
+  resources :wines, only: %i[search show create] do
     resources :reviews, only: %i[show create update]
     get   'reviews', to: 'reviews#show', param: :wine_id, as: 'show_review'
     post  'reviews', to: 'reviews#create', on: :member, as: 'create_review'
@@ -13,4 +13,6 @@ Rails.application.routes.draw do
   end
 
   resources :searches, only: :index
+
+  mount ActionCable.server => '/cable'
 end

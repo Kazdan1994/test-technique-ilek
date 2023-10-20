@@ -7,6 +7,16 @@ class WinesController < ApplicationController
     @pagy, @wines = pagy(Wine.limit(5))
   end
 
+  def create
+    @wine = Wine.new(wine_params)
+    if @wine.save
+      ActionCable.server.broadcast 'WineChannel', wine: @wine
+      redirect_to @wine
+    else
+      render :new
+    end
+  end
+
   def search
     @pagy, @wines = search_wines
     redirect_to_last_page if @pagy.pages < params[:page].to_i
