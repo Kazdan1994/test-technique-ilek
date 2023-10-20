@@ -3,11 +3,14 @@
     <!-- Search Bar -->
     <form class="relative mt-1">
       <label for="search"></label>
-      <input type="search" id="search" name="q" class="w-full pl-3 pr-10 py-2 border-2 border-gray-200 rounded-xl hover:border-gray-300 focus:outline-none focus:border-blue-500 transition-colors" placeholder="Search..." value="<%= params[:q] %>">
+      <input type="search" id="search" name="q" class="w-full pl-3 pr-10 py-5 border-2 border-gray-200 rounded-xl hover:border-gray-300 focus:outline-none focus:border-blue-500 transition-colors" placeholder="Search..." value="<%= params[:q] %>">
       <button class="block w-7 h-7 text-center text-xl leading-0 absolute top-2 right-2 text-gray-400 focus:outline-none hover:text-gray-900 transition-colors">
         <i class="mdi mdi-magnify"></i>
       </button>
     </form>
+
+    <%= link_to 'My searches', searches_path %>
+
     <!-- Color Bar -->
     <div class="absolute top-0 left-0 w-full h-2 flex">
       <div class="h-2 bg-blue-500 flex-1"></div>
@@ -22,20 +25,20 @@
       <% @wines.each do |wine| %>
         <a href="/wines/<%= wine.id %>" class="h-full">
           <div class="relative flex flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md h-full">
-            <div class="relative mt-1 overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700">
+            <div class="relative flex justify-between items-center mt-1 overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700">
               <img
                 src="https://res.cloudinary.com/dttd773dq/image/upload/v1697274692/ilek-assets/images/wine-bottle_uatwvb.png"
-                class="h-full w-full object-cover"
+                class="object-cover h-16"
                 alt=""
                 />
+              <span class="block font-sans text-base font-medium leading-relaxed text-blue-gray-900 antialiased mr-3">
+                <%= wine.name %>
+              </span>
             </div>
             <div class="p-6">
               <div class="mb-2 flex items-center justify-between">
-                <p class="block font-sans text-base font-medium leading-relaxed text-blue-gray-900 antialiased">
-                  <%= wine.name %>
-                </p>
-                <p class="block font-sans text-base font-medium leading-relaxed text-blue-gray-900 antialiased">
-                  <%= number_to_currency(wine.price, :unit => '€', :delimiter => ' ',  format: '%n %u', strip_insignificant_zeros: true) %>
+                <p class="block font-sans text-[#a20848] font-medium leading-relaxed text-blue-gray-900 antialiased">
+                  <%= number_to_currency(wine.price, :unit => '€', :delimiter => ' ', format: '%n %u', strip_insignificant_zeros: true) %>
                 </p>
               </div>
               <p class="block font-sans text-sm font-normal leading-normal text-gray-700 antialiased opacity-75">
@@ -47,22 +50,24 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="yellow">
                   <path d="M10 1l2.93 6.4 6.93.7-5 4.85 1.47 7.1-6.4-3.35-6.4 3.35 1.47-7.1-5-4.85 6.93-.7z"/>
                 </svg>
-                <p class="text-sm text-gray-500 ml-2"><%= wine.note %> / 5</p>
+                <p class="text-sm text-gray-500 ml-2">
+                  <%= number_with_precision(wine.note, precision: 1, separator: ',') %> / 5
+                </p>
               </div>
               <% if expert_signed_in? %>
-              <button
-                class="middle none center rounded-lg bg-pink-500 p-3 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                data-ripple-light="true"
-              >
-                Review this wine
-              </button>
-                <% end %>
+                <button
+                  class="middle none center rounded-lg bg-pink-500 p-3 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                  data-ripple-light="true"
+                >
+                  Review this wine
+                </button>
+              <% end %>
             </div>
           </div>
         </a>
       <% end %>
     </div>
-    <div class="flex items-center justify-center mt-4 pt-4">
+    <div class="flex items-center justify-center mt-6">
       <% if @pagy.pages > 1 %>
         <%= pagy_nav(@pagy, link_extra: 'class="border rounded-md px-3 py-1 text-blue-500 mx-1"', link_inactive_extra: 'class="border rounded-md px-3 py-1 text-gray-500 mx-1"').html_safe %>
       <% end %>
