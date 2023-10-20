@@ -7,6 +7,19 @@ class WinesController < ApplicationController
     @pagy, @wines = pagy(Wine.limit(5))
   end
 
+  def show
+    @wine = Wine.find(params[:id])
+    current_expert_reviews = @wine.reviews.find_by(expert_id: current_expert&.id)
+
+    @sorted_reviews = []
+    @sorted_reviews << current_expert_reviews if current_expert_reviews
+
+    remaining_reviews = @wine.reviews.where.not(id: [@sorted_reviews].compact.flatten.map(&:id)).order(
+      created_at: :desc, updated_at: :desc
+)
+    @sorted_reviews.concat(remaining_reviews)
+  end
+
   def search
     @pagy, @wines = search_wines
     redirect_to_last_page if @pagy.pages < params[:page].to_i

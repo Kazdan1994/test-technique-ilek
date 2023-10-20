@@ -8,15 +8,19 @@
 
     <div class="mb-6">
       <%= form.label :rating, class: "block text-gray-700 text-sm font-bold mb-2" %>
-      <%= form.number_field :rating, in: 1..5, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", value: @review.wine.average_rating || 5 %>
+      <%= form.number_field :rating, in: 1..5, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", value: @review.rating || 5 %>
     </div>
 
     <div class="flex items-center justify-between">
       <%= form.submit "Submit", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
     </div>
   <% end %>
+  <div class="bg-gray-100 p-4 mb-4">
+    <p class="text-lg font-medium">Note : <%= @review.rating %> by <%= @review.expert.name %></p>
+    <p class="text-base"><%= @review.message %></p>
+  </div>
   <% @wine.reviews.each do |review| %>
-    <% if review.id %>
+    <% if review.id != @review.id %>
       <div class="bg-gray-100 p-4 mb-4">
         <p class="text-lg font-medium">Note : <%= review.rating %> by <%= review.expert.name %></p>
         <p class="text-base"><%= review.message %></p>

@@ -56,7 +56,6 @@
         <%= react_component("Notification", { prerender: true }) %>
 
         <!-- Profile dropdown -->
-        <% if user_signed_in? || expert_signed_in? %>
           <div class="relative ml-3">
             <div>
               <button type="button" class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
@@ -75,7 +74,7 @@
                     <%= button_to "Sign out", destroy_expert_session_path, class: "ml-3 bg-gray-700 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded", method: :delete %>
                   </div>
                 <% else %>
-                  <div>
+                  <div class="flex justify-between">
                     <%= link_to "Sign In", new_user_session_path, class: "text-white font-medium" %>
                     <%= button_to "Registration", new_user_registration_path, class: "ml-3 bg-gray-700 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded" %>
                     <%= button_to "I'm an expert", new_expert_session_path, class: "ml-3 bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded" %>
@@ -84,7 +83,6 @@
               </button>
             </div>
           </div>
-        <% end %>
       </div>
     </div>
   </div>

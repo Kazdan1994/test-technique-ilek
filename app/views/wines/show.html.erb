@@ -1,6 +1,6 @@
 <div class="container mx-auto p-6">
   <h1 class="text-3xl font-bold mb-4"><%= @wine.name %></h1>
-  <% @wine.reviews.each do |review| %>
+  <% @sorted_reviews.each do |review| %>
     <div class="bg-gray-100 p-4 mb-4">
       <p class="text-lg font-medium">Note : <%= review.rating %> by <%= review.expert.name %></p>
       <p class="text-base"><%= review.message %></p>
