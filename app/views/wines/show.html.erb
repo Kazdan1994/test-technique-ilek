@@ -30,6 +30,12 @@
     </div>
   <% end %>
 
+  <%# @prices.each do |wine_price| %>
+<!--    <span><%#= wine_price.price %> - <%#= wine_price.date %></span>-->
+  <%# end %>
+
+  <%= react_component "HelloWorld", prerender: false %>
+
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-6">
     <% @paginated_reviews.each do |review| %>
       <div class="bg-white max-w-sm rounded-2xl flex justify-between flex-col px-10 py-2 shadow-lg hover:shadow-2xl transition duration-500">

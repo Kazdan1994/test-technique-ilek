@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Wine Page</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <canvas id="priceChart" width="800" height="400"></canvas>
+
+    <script>
+        const priceData = {
+            labels: ['2015-02-01', '2015-10-08', '2017-03-20', '2017-11-15', '2018-04-19', '2019-01-15', '2021-02-23', '2022-02-11', '2022-09-23', '2023-01-11'],
+            datasets: [{
+                label: 'Price Evolution',
+                data: [11108, 7241, 8247, 2301, 2524, 6857, 11793, 10403, 13254, 4474],
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        };
+
+        const config = {
+            type: 'line',
+            data: priceData,
+            options: {}
+        };
+
+        new Chart(
+            document.getElementById('priceChart'),
+            config
+        );
+    </script>
+</body>
+</html>

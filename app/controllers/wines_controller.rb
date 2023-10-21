@@ -9,8 +9,9 @@ class WinesController < ApplicationController
 
   def show
     per_page = 3
-    @wine = Wine.includes(:reviews).find(params[:id])
+    @wine = Wine.includes(:reviews, :prices).find(params[:id])
     all_reviews = @wine.reviews.order(Arel.sql("CASE WHEN reviews.expert_id = #{current_expert&.id.to_i} THEN 0 ELSE 1 END, reviews.updated_at DESC"))
+    @prices = @wine.prices.order(:date)
 
     @pagy, @paginated_reviews = pagy(all_reviews, items: per_page)
   end
