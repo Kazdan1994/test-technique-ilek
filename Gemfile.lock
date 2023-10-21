@@ -85,6 +85,10 @@ GEM
     addressable (2.8.5)
       public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
+    babel-source (5.8.35)
+    babel-transpiler (0.7.0)
+      babel-source (>= 4.0, < 6)
+      execjs (~> 2.0)
     base64 (0.1.1)
     bcrypt (3.1.19)
     bigdecimal (3.1.4)
@@ -274,12 +278,12 @@ GEM
     rake (13.0.6)
     rdoc (6.5.0)
       psych (>= 4.0.0)
-    react_on_rails (13.4.0)
-      addressable
+    react-rails (3.1.1)
+      babel-transpiler (>= 0.7.0)
       connection_pool
-      execjs (~> 2.5)
-      rails (>= 5.2)
-      rainbow (~> 3.0)
+      execjs
+      railties (>= 3.2)
+      tilt
     regexp_parser (2.8.2)
     reline (0.3.9)
       io-console (~> 0.5)
@@ -323,6 +327,7 @@ GEM
     tailwindcss-rails (2.0.31-x86_64-linux)
       railties (>= 6.0.0)
     thor (1.2.2)
+    tilt (2.3.0)
     timeout (0.4.0)
     turbo-rails (1.5.0)
       actionpack (>= 6.0.0)
@@ -372,7 +377,7 @@ DEPENDENCIES
   pagy
   puma (>= 5.0)
   rails (~> 7.1.1)
-  react_on_rails
+  react-rails
   rubocop
   selenium-webdriver
   sprockets-rails

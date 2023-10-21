@@ -37,11 +37,7 @@ const PricesEvolution = () => {
     },
   };
 
-  return (
-    <div style={{ width: "800px", height: "400px" }}>
-      <Line data={data} options={options} />
-    </div>
-  );
+  return <Line data={data} options={options} />;
 };
 
 export default PricesEvolution;
