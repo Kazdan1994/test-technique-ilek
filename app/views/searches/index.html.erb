@@ -1,10 +1,24 @@
 <div class="container mx-auto p-6">
   <h1 class="mb-6">Searches</h1>
-  <% @searches.each do |search| %>
-    <div class="bg-gray-100 p-4 mb-4">
-      <p class="text-lg font-medium"><%= DateTime.parse(search.updated_at.to_s).strftime('%Y-%m-%d at %H:%M') %></p>
-      <p class="text-base">You searched <%= search.query %></p>
-      <%= link_to "use search #{search.query}", root_path(q: search.query) %>
-    </div>
-  <% end %>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-6">
+    <% @searches.each do |search| %>
+      <a href="<%= root_path(q: search.query) %>">
+        <div class="bg-white max-w-sm rounded-2xl flex justify-between flex-col px-10 py-2 shadow-lg hover:shadow-2xl transition duration-500">
+          <div class="mt-4 text-md text-gray-600">
+            <h4>You searched <%= search.query %></h4>
+          </div>
+          <div class="mt-auto flex justify-between space-x-4 py-6">
+            <div class="text-sm font-semibold">
+              <p class="font-normal text-gray-500"><%= DateTime.parse(search.updated_at.to_s).strftime('%Y-%m-%d at %H:%M') %></p>
+            </div>
+          </div>
+        </div>
+      </a>
+    <% end %>
+  </div>
+  <div class="flex items-center justify-center mt-6">
+    <% if @pagy.pages > 1 %>
+      <%= pagy_nav(@pagy, link_extra: 'class="border rounded-md px-3 py-1 text-blue-500 mx-1"', link_inactive_extra: 'class="border rounded-md px-3 py-1 text-gray-500 mx-1"').html_safe %>
+    <% end %>
+  </div>
 </div>

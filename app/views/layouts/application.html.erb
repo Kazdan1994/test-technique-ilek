@@ -23,6 +23,12 @@
         />
       <i class="text-3xl font-bold mr-3">Wine search</i>
     </a>
+    <ul class="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
+      <li><%= link_to 'Home', root_path, class: 'hover:text-gray-200' %></li>
+      <% if user_signed_in? or expert_signed_in? %>
+        <li><%= link_to 'My searches', searches_path, class: 'hover:text-gray-200' %></li>
+      <% end %>
+    </ul>
     <div class="ml-auto mr-3">
       <%#= react_component 'Notification', { prerender: true } %>
       <button

@@ -4,20 +4,15 @@ class WinesController < ApplicationController
   before_action :set_wine, only: %i[show]
 
   def index
-    @pagy, @wines = pagy(Wine.limit(5))
+    @pagy, @wines = pagy(Wine.limit(6))
   end
 
   def show
-    @wine = Wine.find(params[:id])
-    current_expert_reviews = @wine.reviews.find_by(expert_id: current_expert&.id)
+    per_page = 3
+    @wine = Wine.includes(:reviews).find(params[:id])
+    all_reviews = @wine.reviews.order(Arel.sql("CASE WHEN reviews.expert_id = #{current_expert&.id.to_i} THEN 0 ELSE 1 END, reviews.updated_at DESC"))
 
-    @sorted_reviews = []
-    @sorted_reviews << current_expert_reviews if current_expert_reviews
-
-    remaining_reviews = @wine.reviews.where.not(id: [@sorted_reviews].compact.flatten.map(&:id)).order(
-      created_at: :desc, updated_at: :desc
-)
-    @sorted_reviews.concat(remaining_reviews)
+    @pagy, @paginated_reviews = pagy(all_reviews, items: per_page)
   end
 
   def search
@@ -35,9 +30,9 @@ class WinesController < ApplicationController
       searches.each do |search|
         puts search.note
       end
-      pagy(searches, items: 5, sort: { note: 'desc' })
+      pagy(searches, items: 6, sort: { note: 'desc' })
     else
-      pagy(sorted_wines, items: 5)
+      pagy(sorted_wines, items: 6)
     end
   end
 

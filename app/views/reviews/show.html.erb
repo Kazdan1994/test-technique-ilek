@@ -18,22 +18,22 @@
       </div>
     </div>
   </div>
-    <div class="flex justify-center max-w-3xl mb-6">
-  <%= form_with(model: [@wine, @review], local: true) do |form| %>
-    <div class="mb-4">
-      <%= form.label :message, class: "block text-gray-700 text-sm font-bold mb-2" %>
-      <%= form.text_area :message, class: "shadow appearance-none border rounded w-full py-6 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", value: @review.message || '' %>
-    </div>
+  <div class="flex justify-center max-w-3xl mb-6">
+    <%= form_with(model: [@wine, @review], local: true) do |form| %>
+      <div class="mb-4">
+        <%= form.label :message, class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <%= form.text_area :message, class: "shadow appearance-none border rounded w-full py-6 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", value: @review.message || '' %>
+      </div>
 
-    <div class="mb-6">
-      <%= form.label :rating, class: "block text-gray-700 text-sm font-bold mb-2" %>
-      <%= form.number_field :rating, in: 1..5, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", value: @review.rating || 5 %>
-    </div>
+      <div class="mb-6">
+        <%= form.label :rating, class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <%= form.number_field :rating, in: 1..5, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", value: @review.rating || 5 %>
+      </div>
 
-    <div class="flex items-center justify-between">
-      <%= form.submit "Submit", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
-    </div>
-  <% end %>
+      <div class="flex items-center justify-between">
+        <%= form.submit "Submit", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+      </div>
+    <% end %>
   </div>
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-6">
     <% @wine.reviews.each do |review| %>
