@@ -1,8 +1,16 @@
+# frozen_string_literal: true
+
+# Wine Model
 class Wine < ApplicationRecord
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 
-  after_create ->(wine) { ActionCable.server.broadcast 'WineChannel', wine: }
+  extend Pagy::ElasticsearchRails
+
+  belongs_to :recipient, class_name: 'User'
+  belongs_to :recipient, class_name: 'Expert'
+
+  after_create_commit :wine_matches_previous_search
 
   has_many :reviews, dependent: :destroy
   has_many :prices, dependent: :destroy
@@ -13,6 +21,7 @@ class Wine < ApplicationRecord
     mappings dynamic: 'false' do
       indexes :name, type: 'text'
       indexes :properties, type: 'text'
+      indexes :price, type: 'float'
       indexes :marketplace, type: 'text'
       indexes :note, type: 'float'
       indexes :wine_type, type: 'text'
@@ -20,7 +29,7 @@ class Wine < ApplicationRecord
   end
 
   def as_indexed_json(_ = {})
-    as_json(only: %i[name properties marketplace note wine_type])
+    as_json(only: %i[name properties price marketplace note wine_type])
   end
 
   def average_rating
@@ -31,25 +40,26 @@ class Wine < ApplicationRecord
     end
   end
 
-  def matches_user_searches?
-    user_searches = Search.where(expert_id: current_expert.id)
-    user_searches.each do |user_search|
-      return true if Search.index(user_search.query)
-    end
-    false
-  end
-
-  def notify_user_of_match
-    Notice.create(
-      recipient: current_expert,
-      subject: 'New wine matches your previous searches!',
-      body: "The new wine #{name} matches your previous searches for #{search_terms.join(', ')}."
-    )
-  end
-
   # This method calculates the average rating of the wine
   def recalculate_average_rating
     self.note = average_rating
     save
+  end
+
+  def wine_matches_previous_search
+    wine = self
+    search_results = Search.where('query LIKE ?', "%#{wine.id}%")
+    user_ids = search_results.pluck(:user_id)
+    expert_ids = search_results.pluck(:expert_id)
+
+    user_ids.each do |_user_id|
+      # Notify the user
+      NewMessageNotification.with(message: self).deliver_later(recipient)
+    end
+
+    expert_ids.each do |_expert_id|
+      # Notify the expert
+      NewMessageNotification.with(message: self).deliver_later(recipient)
+    end
   end
 end

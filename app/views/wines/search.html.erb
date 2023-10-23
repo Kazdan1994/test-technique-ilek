@@ -3,7 +3,7 @@
     <!-- Search Bar -->
     <form class="relative mt-1">
       <label for="search"></label>
-      <input type="search" id="search" name="q" class="w-full pl-3 pr-10 py-5 border-2 border-gray-200 rounded-xl hover:border-gray-300 focus:outline-none focus:border-blue-500 transition-colors" placeholder="Search..." value="<%= params[:q] %>">
+      <input type="search" id="search" name="q" class="w-full pl-3 pr-10 py-5 border-2 border-gray-200 rounded-xl hover:border-gray-300 focus:outline-none focus:border-blue-500 transition-colors" placeholder="Search a wine..." value="<%= params[:q] %>">
       <button class="block w-7 h-7 text-center text-xl leading-0 absolute top-2 right-2 text-gray-400 focus:outline-none hover:text-gray-900 transition-colors">
         <i class="mdi mdi-magnify"></i>
       </button>
@@ -21,7 +21,7 @@
     <!-- Wine Cards -->
     <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-6 xl:gap-x-4">
       <% @wines.each do |wine| %>
-        <a href="/wines/<%= wine.id %>" class="h-full">
+        <a href="<%= wine_path(wine.id) %>" class="h-full">
           <div class="relative flex flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md h-full">
             <div class="relative flex justify-between items-center mt-1 overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700">
               <img

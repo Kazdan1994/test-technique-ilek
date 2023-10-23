@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import consumer from "../channels/consumer";
 
 const Notification = () => {
   const [notifications, setNotifications] = useState([]);
 
   const numberOfNotifications = notifications.length;
 
-  /*useEffect(() => {
+  useEffect(() => {
     const wineChannel = consumer.subscriptions.create("WineChannel", {
       received(data) {
         setNotifications((prevNotifications) => [
@@ -18,7 +19,7 @@ const Notification = () => {
     return () => {
       wineChannel.unsubscribe();
     };
-  }, []);*/
+  }, []);
 
   return (
     <React.Fragment>

@@ -1,28 +1,19 @@
+# frozen_string_literal: true
+
 # To deliver this notification:
 #
 # WineNotification.with(post: @post).deliver_later(current_user)
 # WineNotification.with(post: @post).deliver(current_user)
 
+# Wine Notification
 class WineNotification < Noticed::Base
-  # Add your delivery methods
-  #
-  deliver_by :database
   deliver_by :actioncable
-  # deliver_by :email, mailer: "UserMailer"
-  # deliver_by :slack
-  # deliver_by :custom, class: "MyDeliveryMethod"
 
-  # Add required params
-  #
-  # param :post
+  def message
+    t('.message')
+  end
 
-  # Define helper methods to make rendering easier.
-  #
-  # def message
-  #   t(".message")
-  # end
-  #
-  # def url
-  #   post_path(params[:post])
-  # end
+  def url
+    wine_path(params[:id])
+  end
 end

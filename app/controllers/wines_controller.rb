@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Wines controller
 class WinesController < ApplicationController
   include Pagy::Backend
@@ -26,12 +28,17 @@ class WinesController < ApplicationController
   def search_wines
     if params[:q].present?
       save_search
-      searches = Wine.__elasticsearch__.search(query: wildcard_query, sort: { note: { order: :desc } }).records
-
-      searches.each do |search|
-        puts search.note
-      end
-      pagy(searches, items: 6, sort: { note: 'desc' })
+      search_response = Wine.__elasticsearch__.search(
+        query: {
+          multi_match: {
+            query: params[:q],
+            fields: %w[name properties marketplace]
+          },
+        },
+        sort: [{ note: 'desc' }]
+      )
+      searches = search_response.records
+      pagy(searches, items: 6)
     else
       pagy(sorted_wines, items: 6)
     end
@@ -48,26 +55,12 @@ class WinesController < ApplicationController
     search.touch
   end
 
-  def wildcard_query
-    {
-      bool: {
-        should: %w[name properties marketplace].map do |field|
-          { wildcard: { field => "*#{params[:q]}*" } }
-        end
-      }
-    }
-  end
-
   def redirect_to_last_page
     redirect_to action: 'search', q: params[:q]
   end
 
   def set_wine
     @wine = Wine.find(params[:id])
-  end
-
-  def wine_params
-    params.require(:wine).permit(:note)
   end
 
   def sorted_wines

@@ -1,13 +1,66 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+bordeaux:
+  id: 1
+  name: 2000 André Family Wines Small Lot Touriga Nacional
+  properties: This dessert wine is incredible and starts off with light stewed pineapple and liquorice. The palette fills your mouth with sweet mango, cream, forest floor. Overall it is mouth-filling and leaves you satisfied.
+  price: 14
+  note: 3
+  marketplace: Wine cave
+  wine_type: red
 
-one:
-  name: MyString
-  properties: MyText
-  price: 1.5
-  marketplace: MyString
+bourgogne:
+  id: 2
+  name: 2000 Petit Family Wines Moscato
+  properties: This red wine is well-made and pleases the nose with pronounced jammy prune and vanilla. The palette delights with dry strawberry, resinous, asparagus. Overall it is mouth-filling and pleases any crowd.
+  price: 15
+  note: 3
+  marketplace: Wine cave
+  wine_type: white
 
-two:
-  name: MyString
-  properties: MyText
-  price: 1.5
-  marketplace: MyString
+loire:
+  id: 3
+  name: 2004 Faure Group Marsanne
+  properties: This white wine is breath-taking attempt that has just a whiff of pronounced juicy green apple and liquorice. The palette has acid that tingles with a flavor of off-dry pineapple, butter, cabbage. Overall it is fruit-driven and welcomes the senses.
+  price: 37
+  note: 1.5
+  marketplace: Wine cave
+  wine_type: white
+
+
+chateau:
+  id: 4
+  name: 1991 Renault Wines Chardonnay
+  properties: This sparkling wine is a pleasure to drink that pleases the nose with medium juicy apricot and lavender. The palette has a delightful touch of dry red apple, biscuit, cabbage. Overall it is elegant and ends with a lovely long finish.
+  price: 42
+  note: 2.2
+  marketplace: Wine cave
+  wine_type: white
+
+
+latour:
+  id: 5
+  name: 2009 Benoit Cellars Small Lot Cabernet Franc
+  properties: This white wine is pleasant and pleases the nose with medium under-ripe gooseberry and juniper. The palette has a delightful touch of luscious pineapple, biscuit, fresh earth. Overall it is neutral and makes you yearn for the next sip.
+  price: 12
+  note: 3.4
+  marketplace: Wine cave
+  wine_type: white
+
+
+levin:
+  id: 6
+  name: 2018 Roux Brands Muscadel
+  properties: This rosé wine is delightful and has odors of medium under-ripe sultana and juniper. The palette does not disappoint with off-dry melon, vanilla, cabbage. Overall it is mouth-filling and makes you yearn for the next sip.
+  price: 153
+  note: 3.7
+  marketplace: Wine cave
+  wine_type: white
+
+
+wines:
+  id: 7
+  name: 2022 Lopéz Estates Merlot
+  properties: This red wine is pleasant and pleases the nose with pronounced ripe blueberry and eucalyptus. The palette has acid that tingles with a flavor of off-dry red cherry, char, asparagus. Overall it is austere and ends with a lovely long finish.
+  price: 107
+  note: 2.3
+  marketplace: Wine cave
+  wine_type: sparkling
