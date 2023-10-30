@@ -22,6 +22,7 @@ Welcome to the Wine Cellar Application! This application allows you to manage an
 
    ```bash
    $ bundle install
+   $ yarn install
    ```
 
 3. Set up the database:
